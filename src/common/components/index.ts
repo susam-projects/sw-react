@@ -1,1 +1,1 @@
-export const Button = 'Button';
+export * from './Loader/FullPageLoader.tsx';

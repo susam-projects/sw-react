@@ -1,5 +1,3 @@
 import { ThemeConfig } from 'antd';
 
-const theme: ThemeConfig = {};
-
-export default theme;
+export const theme: ThemeConfig = {};

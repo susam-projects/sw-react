@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { CharacterListPage } from '../characterList';
 import { CharacterDetailsPage } from '../characterDetails';
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     path: '/',
     element: <CharacterListPage />,
@@ -12,5 +12,3 @@ const router = createBrowserRouter([
     element: <CharacterDetailsPage />,
   },
 ]);
-
-export default router;

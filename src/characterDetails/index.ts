@@ -1,1 +1,1 @@
-export { default as CharacterDetailsPage } from './page/CharacterDetailsPage';
+export * from './pages/CharacterDetailsPage';

@@ -1,1 +1,7 @@
-export type Id = string | number;
+export type Url = string;
+
+export type DateString = string;
+
+export interface IDomainError {
+  message: string;
+}

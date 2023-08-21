@@ -23,6 +23,7 @@
       "warn",
       { "allowConstantExport": true }
     ],
-    "@typescript-eslint/no-unsafe-assignment": "off"
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/ban-ts-comment": "off"
   }
 }

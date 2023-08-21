@@ -12,19 +12,24 @@ export interface IApiList<T> {
 export class ListApi<T> {
   constructor(private route: string) {}
 
-  async fetchFirstPage(abortSignal?: AbortSignal): Promise<IApiResponse<T>> {
-    return fetchJson<T>(`${BASE_URL}/${this.route}/`, abortSignal);
+  async fetchFirstPage(abortSignal?: AbortSignal) {
+    return fetchJson<IApiList<T>>(`${BASE_URL}/${this.route}/`, abortSignal);
   }
 
-  async fetchPage(
-    pageUrl: Url,
+  async fetchPage(pageUrl: Url, abortSignal?: AbortSignal) {
+    return fetchJson<IApiList<T>>(pageUrl, abortSignal);
+  }
+
+  async fetchItem(
+    id: string,
     abortSignal?: AbortSignal,
   ): Promise<IApiResponse<T>> {
-    return fetchJson<T>(pageUrl, abortSignal);
+    return fetchJson<T>(`${BASE_URL}/${this.route}/${id}/`, abortSignal);
   }
 
+  // put it here because it depends on the url content
   getItemId(itemUrl: string): string {
-    const regexp = new RegExp(`${BASE_URL}/${this.route}/(\\d+)`, 'ig');
+    const regexp = new RegExp(`${BASE_URL}/${this.route}/(\\d+)`, 'i');
     const result = regexp.exec(itemUrl);
     return result?.[1] || '';
   }

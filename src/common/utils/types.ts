@@ -2,6 +2,6 @@ export type Url = string;
 
 export type DateString = string;
 
-export interface IDomainError {
-  message: string;
+export interface Constructor<TType, TParams extends [] = []> {
+  new (...args: TParams): TType;
 }

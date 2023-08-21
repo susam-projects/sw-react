@@ -1,13 +1,13 @@
 import { Col, Row } from 'antd';
 import { FC } from 'react';
-import { CharacterCard } from './CharacterCard/CharacterCard.tsx';
 import {
-  CardLink,
   FullPageLoader,
-  Header,
-  Root,
-} from './CharacterList.styled.ts';
-import { ICharacter } from '../../pages/CharacterListPage.types.ts';
+  PageHeader,
+  PageRoot,
+} from '../../../common/components';
+import { ICharacter } from '../../../common/entity';
+import { CharacterCard } from '../CharacterCard/CharacterCard.tsx';
+import { CardLink } from './CharacterList.styled.ts';
 
 interface CharacterListProps {
   isLoading: boolean;
@@ -22,9 +22,9 @@ export const CharacterList: FC<CharacterListProps> = ({
 }) => {
   return (
     // TODO: use skeletons instead of spinner
-    <FullPageLoader size="large" tip="Loading..." spinning={isLoading}>
-      <Root>
-        <Header>SW Characters</Header>
+    <FullPageLoader spinning={isLoading}>
+      <PageRoot>
+        <PageHeader>SW Characters</PageHeader>
         <Row gutter={[16, 16]} align="stretch">
           {characters.map((character, i) => (
             <Col
@@ -42,7 +42,7 @@ export const CharacterList: FC<CharacterListProps> = ({
             </Col>
           ))}
         </Row>
-      </Root>
+      </PageRoot>
     </FullPageLoader>
   );
 };

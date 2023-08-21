@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
+import { ICharacter } from '../../common/entity';
 import { CharacterList } from '../components/CharacterList/CharacterList.tsx';
 import { characterListService } from '../services/characterListService.ts';
-import { ICharacter } from './CharacterListPage.types.ts';
 
 export const CharacterListPage: FC = () => {
   const [isLoading, setIsLoading] = useState(false);

@@ -1,22 +1,16 @@
-import { IDomainError } from '../../common/utils';
+import { AccessError } from '../../common/accessors';
 
-export type ICharacterListAccessError = IDomainError;
+export type ICharacterListAccessError = AccessError;
 
 // TODO: use i18n
-export class CharacterListFetchError implements ICharacterListAccessError {
-  message = 'Error fetching characters';
+export class CharacterListFetchError extends AccessError {
+  override message = 'Error fetching characters';
 }
 
-export class CharacterListNextError implements ICharacterListAccessError {
-  message = "There's no link to previous page";
+export class CharacterListNextError extends AccessError {
+  override message = "There's no link to previous page";
 }
 
-export class CharacterListPrevError implements ICharacterListAccessError {
-  message = "There's no link to next page";
-}
-
-export class CharacterListMultipleRequestsError
-  implements ICharacterListAccessError
-{
-  message = "Can't send a request when there's another one";
+export class CharacterListPrevError extends AccessError {
+  override message = "There's no link to next page";
 }

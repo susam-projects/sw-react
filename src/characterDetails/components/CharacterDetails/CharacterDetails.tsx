@@ -3,7 +3,9 @@ import {
   FullPageLoader,
   PageHeader,
   PageRoot,
+  SecondaryTitle,
   SimpleTable,
+  StylelessLink,
 } from '../../../common/components';
 import { ICharacter } from '../../../common/entity';
 import { PageContent } from './CharacterDetails.styled.ts';
@@ -18,10 +20,13 @@ export const CharacterDetails: FC<ICharacterDetailsProps> = ({
   data,
 }) => {
   return (
-    <FullPageLoader spinning={isLoading}>
-      <PageRoot>
-        <PageHeader>{data.name}</PageHeader>
-        <PageContent>
+    <PageRoot>
+      <PageHeader>
+        <StylelessLink to="/">Star Wars Explorer</StylelessLink>
+      </PageHeader>
+      <SecondaryTitle level={2}>{data.name}</SecondaryTitle>
+      <PageContent>
+        <FullPageLoader spinning={isLoading} tip="Loading character...">
           <SimpleTable
             padding="wide"
             data={[
@@ -35,8 +40,8 @@ export const CharacterDetails: FC<ICharacterDetailsProps> = ({
               { fieldName: 'Gender:', fieldValue: data.gender },
             ]}
           />
-        </PageContent>
-      </PageRoot>
-    </FullPageLoader>
+        </FullPageLoader>
+      </PageContent>
+    </PageRoot>
   );
 };

@@ -1,2 +1,2 @@
-export * from './PageLayout.ts';
+export * from './PageLayout.tsx';
 export * from './TableLayout.tsx';

@@ -10,8 +10,6 @@ export class ListAccessor<
   constructor(
     private api: ListApi<TEntity>,
     EntityFetchError: Constructor<TListAccessError>,
-    private NextError: Constructor<TListAccessError>,
-    private PrevError: Constructor<TListAccessError>,
   ) {
     super(EntityFetchError);
   }
@@ -20,44 +18,35 @@ export class ListAccessor<
     return this.data?.results || [];
   }
 
-  async fetchList(): Promise<null | TListAccessError> {
-    let result: Awaited<ReturnType<typeof this.api.fetchFirstPage>>;
-    const error = await this.sendRequest(async (abortSignal) => {
-      result = await this.api.fetchFirstPage(abortSignal);
-    });
-    if (error) return error as TListAccessError;
-    return this.processFetchResult(result!);
+  get totalCount() {
+    return this.data?.count || 0;
   }
 
-  async fetchNextPage(): Promise<null | TListAccessError> {
-    if (!this.hasNextPage()) {
-      return new this.NextError();
+  get currentPage() {
+    const nextPageNumber = this.api.getPageNumber(this.data?.next || '');
+    const prevPageNumber = this.api.getPageNumber(this.data?.previous || '');
+    if (Number.isNaN(nextPageNumber) && Number.isNaN(prevPageNumber)) {
+      return 1;
     }
+    if (!Number.isNaN(prevPageNumber)) {
+      return prevPageNumber + 1;
+    }
+    return nextPageNumber - 1;
+  }
+
+  get pageSize() {
+    return this.api.getPageSize();
+  }
+
+  async fetchList(
+    page: number = 1,
+    search: string = '',
+  ): Promise<null | TListAccessError> {
     let result: Awaited<ReturnType<typeof this.api.fetchPage>>;
     const error = await this.sendRequest(async (abortSignal) => {
-      result = await this.api.fetchPage(this.data!.next!, abortSignal);
+      result = await this.api.fetchPage(page, search, abortSignal);
     });
     if (error) return error as TListAccessError;
     return this.processFetchResult(result!);
-  }
-
-  async fetchPrevPage(): Promise<null | TListAccessError> {
-    if (!this.hasPrevPage()) {
-      return new this.PrevError();
-    }
-    let result: Awaited<ReturnType<typeof this.api.fetchPage>>;
-    const error = await this.sendRequest(async (abortSignal) => {
-      result = await this.api.fetchPage(this.data!.previous!, abortSignal);
-    });
-    if (error) return error as TListAccessError;
-    return this.processFetchResult(result!);
-  }
-
-  public hasNextPage() {
-    return !!this.data?.next;
-  }
-
-  public hasPrevPage() {
-    return !!this.data?.previous;
   }
 }

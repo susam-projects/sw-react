@@ -6,11 +6,3 @@ export type ICharacterListAccessError = AccessError;
 export class CharacterListFetchError extends AccessError {
   override message = 'Error fetching characters';
 }
-
-export class CharacterListNextError extends AccessError {
-  override message = "There's no link to previous page";
-}
-
-export class CharacterListPrevError extends AccessError {
-  override message = "There's no link to next page";
-}

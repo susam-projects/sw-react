@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
 
-export const CardLink = styled(Link)`
-  display: block;
-  height: 100%;
+export const CharacterTableWrapper = styled.div`
+  margin: 0 auto;
+  max-width: 800px;
 `;

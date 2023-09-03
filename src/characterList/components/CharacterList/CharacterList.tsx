@@ -1,17 +1,23 @@
-import { Col, Row } from 'antd';
 import { FC } from 'react';
 import {
-  FullPageLoader,
   PageHeader,
   PageRoot,
+  TableHeader,
+  TableHeading,
 } from '../../../common/components';
 import { ICharacter } from '../../../common/entity';
-import { CharacterCard } from '../CharacterCard/CharacterCard.tsx';
-import { CardLink } from './CharacterList.styled.ts';
+import { CharacterTable } from '../CharacterTable/CharacterTable.tsx';
+import { CharacterTableWrapper } from './CharacterList.styled.ts';
+import { CharacterSearch } from '../CharacterSearch/CharacterSearch.tsx';
 
 interface CharacterListProps {
   isLoading: boolean;
   characters: ICharacter[];
+  totalCharacters: number;
+  currentPage: number;
+  pageSize: number;
+  onPageChange: (newPage: number) => void;
+  onSearch: (newSearch: string) => void;
 }
 
 // TODO: use Layout component
@@ -19,30 +25,29 @@ interface CharacterListProps {
 export const CharacterList: FC<CharacterListProps> = ({
   isLoading,
   characters,
+  totalCharacters,
+  currentPage,
+  pageSize,
+  onPageChange,
+  onSearch,
 }) => {
   return (
-    // TODO: use skeletons instead of spinner
-    <FullPageLoader spinning={isLoading}>
-      <PageRoot>
-        <PageHeader>SW Characters</PageHeader>
-        <Row gutter={[16, 16]} align="stretch">
-          {characters.map((character, i) => (
-            <Col
-              key={character.id || character.name || i}
-              xs={24}
-              sm={12}
-              md={8}
-              lg={6}
-              xl={4}
-              xxl={2}
-            >
-              <CardLink to={`/character/${character.id}`}>
-                <CharacterCard data={character} />
-              </CardLink>
-            </Col>
-          ))}
-        </Row>
-      </PageRoot>
-    </FullPageLoader>
+    <PageRoot>
+      <PageHeader>Star Wars Explorer</PageHeader>
+      <CharacterTableWrapper>
+        <TableHeader>
+          <TableHeading>characters</TableHeading>
+          <CharacterSearch onSearch={onSearch} />
+        </TableHeader>
+        <CharacterTable
+          data={characters}
+          isLoading={isLoading}
+          totalItems={totalCharacters}
+          page={currentPage}
+          pageSize={pageSize}
+          onPageChange={onPageChange}
+        />
+      </CharacterTableWrapper>
+    </PageRoot>
   );
 };
